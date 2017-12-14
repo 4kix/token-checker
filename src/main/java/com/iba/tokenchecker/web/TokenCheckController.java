@@ -1,5 +1,6 @@
 package com.iba.tokenchecker.web;
 
+import com.iba.tokenchecker.exception.JwtTokenMissingException;
 import com.iba.tokenchecker.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,13 @@ public class TokenCheckController {
     private static final Logger logger = LoggerFactory.getLogger(TokenCheckController.class);
 
     @RequestMapping(value = "check", method = RequestMethod.POST)
-    public ResponseEntity<Void> check(@RequestHeader(value = "Authorization") String authToken) {
+    public ResponseEntity<Void> check(@RequestHeader(value = "Authorization") String header) {
+
+        if (header == null || !header.startsWith("Bearer ")) {
+            throw new JwtTokenMissingException("No JWT token found in request headers");
+        }
+
+        String authToken = header.substring(7);
 
         if(tokenService.checkToken(authToken)) {
             return new ResponseEntity<>(HttpStatus.OK);

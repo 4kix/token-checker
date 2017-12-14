@@ -24,6 +24,7 @@ public class JwtUtil {
                     .parseClaimsJws(token)
                     .getBody();
 
+            System.out.println("decrypted: "+body.getSubject() + " " + body.get("role") );
             return new User(body.getSubject(), (String) body.get("role"));
 
         } catch (JwtException | ClassCastException e) {
