@@ -6,8 +6,8 @@ import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 @Service
 public class TokenService {
@@ -15,30 +15,27 @@ public class TokenService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    private List<String> authenticatedUsers = new ArrayList<>();
+    private ConcurrentMap<String,User> authenticatedUsers = new ConcurrentHashMap<>();
 
-    public boolean checkToken(String token){
+    public boolean verifyToken(String token){
 
         User parsedUser = jwtUtil.parseToken(token);
 
         if (parsedUser == null) {
             throw new JwtException("JWT token is not valid");
-        } else if(authenticatedUsers.contains(parsedUser.getName())) {
-            return true;
         }
 
-        return false;
-    }
-
-    public User retreiveUser() {
-        return new User("","");
+        return authenticatedUsers.containsValue(parsedUser);
     }
 
     public String authenticate(String username, String password) {
 
         if(username.equals("ADMIN") && password.equals("1234")) {
-            authenticatedUsers.add(username);
-            return jwtUtil.generateToken(new User(username, "ADMIN"));
+
+            User user = new User(username, "ADMIN");
+
+            authenticatedUsers.put(username, user);
+            return jwtUtil.generateToken(user);
         }
         return null;
     }

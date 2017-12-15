@@ -18,6 +18,7 @@ public class TokenCheckerExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<String> exceptionHandler(Exception e) throws Exception {
         logger.error(e.getMessage());
+        e.printStackTrace();
         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

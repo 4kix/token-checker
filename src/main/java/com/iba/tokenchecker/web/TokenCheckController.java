@@ -29,11 +29,11 @@ public class TokenCheckController {
         }
 
         String authToken = header.substring(7);
-
-        if(tokenService.checkToken(authToken)) {
-            return new ResponseEntity<>(HttpStatus.OK);
+        if (!tokenService.verifyToken(authToken)) {
+            logger.info("Verification failed: user is not authenticated");
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "login", method = RequestMethod.POST)
@@ -41,10 +41,10 @@ public class TokenCheckController {
                                         @RequestHeader(value = "password") String password) {
 
         String token = tokenService.authenticate(username, password);
-
-        if (token != null) {
-            return new ResponseEntity<>(token, HttpStatus.OK);
+        if (token == null) {
+            logger.info("Authentication failed: username or password is incorrect");
+            return new ResponseEntity<>("Authentication failed: username or password is incorrect", HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(token, HttpStatus.OK);
     }
 }
