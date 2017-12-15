@@ -1,6 +1,6 @@
 package com.iba.tokenchecker.security.filter;
 
-import com.iba.tokenchecker.exception.JwtTokenMissingException;
+import com.iba.tokenchecker.fwk.exception.JwtTokenMissingException;
 import com.iba.tokenchecker.security.JwtAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

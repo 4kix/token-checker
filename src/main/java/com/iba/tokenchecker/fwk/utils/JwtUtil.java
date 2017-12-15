@@ -1,4 +1,4 @@
-package com.iba.tokenchecker.utils;
+package com.iba.tokenchecker.fwk.utils;
 
 import com.iba.tokenchecker.model.user.User;
 import io.jsonwebtoken.Claims;

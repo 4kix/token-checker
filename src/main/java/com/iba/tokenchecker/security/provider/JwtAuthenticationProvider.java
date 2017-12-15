@@ -1,10 +1,10 @@
 package com.iba.tokenchecker.security.provider;
 
-import com.iba.tokenchecker.exception.JwtTokenMalformedException;
+import com.iba.tokenchecker.fwk.exception.JwtTokenMalformedException;
 import com.iba.tokenchecker.model.user.AuthenticatedUserMock;
 import com.iba.tokenchecker.model.user.User;
 import com.iba.tokenchecker.security.JwtAuthenticationToken;
-import com.iba.tokenchecker.utils.JwtUtil;
+import com.iba.tokenchecker.fwk.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;

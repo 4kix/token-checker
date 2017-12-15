@@ -1,7 +1,7 @@
 package com.iba.tokenchecker.service;
 
 import com.iba.tokenchecker.model.user.User;
-import com.iba.tokenchecker.utils.JwtUtil;
+import com.iba.tokenchecker.fwk.utils.JwtUtil;
 import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

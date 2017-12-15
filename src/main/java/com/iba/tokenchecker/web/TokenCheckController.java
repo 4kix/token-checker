@@ -1,6 +1,6 @@
 package com.iba.tokenchecker.web;
 
-import com.iba.tokenchecker.exception.JwtTokenMissingException;
+import com.iba.tokenchecker.fwk.exception.JwtTokenMissingException;
 import com.iba.tokenchecker.service.TokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

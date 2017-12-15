@@ -1,4 +1,4 @@
-package com.iba.tokenchecker.exception;
+package com.iba.tokenchecker.fwk.exception;
 
 public class JwtTokenMissingException extends RuntimeException {
 
