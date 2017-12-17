@@ -2,15 +2,13 @@ package com.iba.tokenchecker.web;
 
 import com.iba.tokenchecker.fwk.exception.JwtTokenMissingException;
 import com.iba.tokenchecker.service.TokenService;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api")
@@ -36,15 +34,17 @@ public class TokenCheckController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<String> login(@RequestHeader(value = "username") String username,
-                                        @RequestHeader(value = "password") String password) {
+                                            @RequestHeader(value = "password") String password) {
 
         String token = tokenService.authenticate(username, password);
         if (token == null) {
             logger.info("Authentication failed: username or password is incorrect");
-            return new ResponseEntity<>("Authentication failed: username or password is incorrect", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Authentication failed: username or password is incorrect",
+                    HttpStatus.UNAUTHORIZED);
         }
-        return new ResponseEntity<>(token, HttpStatus.OK);
+
+        return new ResponseEntity<>(tokenService.createTokenResponse(token).toString(), HttpStatus.OK);
     }
 }

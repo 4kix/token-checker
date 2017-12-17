@@ -3,6 +3,7 @@ package com.iba.tokenchecker.service;
 import com.iba.tokenchecker.model.user.User;
 import com.iba.tokenchecker.fwk.utils.JwtUtil;
 import io.jsonwebtoken.JwtException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,14 @@ public class TokenService {
             return jwtUtil.generateToken(user);
         }
         return null;
+    }
+
+    public JSONObject createTokenResponse(String token) {
+
+        JSONObject response = new JSONObject();
+        response.put("access_token", token)
+                .put("token_type", "bearer");
+
+        return response;
     }
 }
