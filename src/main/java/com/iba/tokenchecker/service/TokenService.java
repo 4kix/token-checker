@@ -16,6 +16,8 @@ public class TokenService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired UserService userService;
+
     private ConcurrentMap<String,User> authenticatedUsers = new ConcurrentHashMap<>();
 
     public boolean verifyToken(String token){
@@ -33,7 +35,7 @@ public class TokenService {
 
         if(username.equals("ADMIN") && password.equals("1234")) {
 
-            User user = new User(username, "ADMIN");
+            User user = userService.loadUserByUsername(username);
 
             authenticatedUsers.put(username, user);
             return jwtUtil.generateToken(user);
