@@ -41,8 +41,7 @@ public class TokenCheckController {
         String token = tokenService.authenticate(username, password);
         if (token == null) {
             logger.info("Authentication failed: username or password is incorrect");
-            return new ResponseEntity<>("Authentication failed: username or password is incorrect",
-                    HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
         return new ResponseEntity<>(tokenService.createTokenResponse(token).toString(), HttpStatus.OK);
